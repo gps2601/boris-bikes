@@ -96,6 +96,16 @@ describe DockingStation do
       my_docking_station.dock(Bike.new)
     end
 
-    expect { my_docking_station.dock(Bike.new) }.to_not raise_error 
+    expect { my_docking_station.dock(Bike.new) }.to_not raise_error
+  end
+
+  it 'will not release a bike that is not working' do
+    my_docking_station = DockingStation.new
+    my_broken_bike = Bike.new
+    my_broken_bike.is_broken
+    my_docking_station.dock(my_broken_bike)
+
+
+    expect{ my_docking_station.release_bike }.to raise_error 'No bikes available'
   end
 end

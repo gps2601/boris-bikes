@@ -10,9 +10,9 @@ class DockingStation
   end
 
   def release_bike
-    raise 'No bikes available' if empty?
-
-    docked_bikes.pop
+    index_of_first_working_bike = docked_bikes.index{|bike| bike.working?}
+    raise 'No bikes available' if index_of_first_working_bike == nil
+    docked_bikes.delete_at(index_of_first_working_bike)
   end
 
   def dock(bike)
