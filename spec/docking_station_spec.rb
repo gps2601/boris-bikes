@@ -77,4 +77,16 @@ describe DockingStation do
     end
     expect { my_docking_station.dock Bike.new }.to raise_error 'Docking station at capacity'
   end
+
+  it 'can set a default value for number of bikes' do
+    my_docking_station = DockingStation.new
+
+    expect(my_docking_station.capacity).to eq(20)
+  end
+
+  it 'can accept an argument for setting number of bikes' do
+    my_docking_station = DockingStation.new(100)
+
+    expect(my_docking_station.capacity).to eq(100)
+  end
 end
