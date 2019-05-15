@@ -127,8 +127,25 @@ describe DockingStation do
     my_docking_station.dock(third_broken_bike)
 
     faulty_bikes = my_docking_station.give_faulty_bikes
-
     expect(faulty_bikes).to eq([first_broken_bike, second_broken_bike, third_broken_bike])
+  end
+
+  it 'will onlyremove the faulty bikes the docking station' do
+    my_docking_station = DockingStation.new
+    first_broken_bike = double(:bike, working?: false)
+    second_broken_bike = double(:bike, working?: false)
+    third_broken_bike = double(:bike, working?: false)
+    working_bike = double(:bike, working?: true)
+    my_docking_station.dock(first_broken_bike)
+    my_docking_station.dock(second_broken_bike)
+    my_docking_station.dock(third_broken_bike)
+    my_docking_station.dock(working_bike)
+
+    faulty_bikes = my_docking_station.give_faulty_bikes
+    bikes_left_in_docking_station = my_docking_station.docked_bikes
+    all_bikes_working = bikes_left_in_docking_station.all? {|bike| bike.working?}
+
+    expect(all_bikes_working).to be true
   end
 
   # implement removal from class array

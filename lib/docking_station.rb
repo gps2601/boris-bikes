@@ -22,7 +22,9 @@ class DockingStation
   end
 
   def give_faulty_bikes
-    @docked_bikes.select{|bike| !bike.working?}
+    bikes_to_return = @docked_bikes.select{|bike| !bike.working?}
+    @docked_bikes = @docked_bikes - bikes_to_return
+    bikes_to_return
   end
 
   private
