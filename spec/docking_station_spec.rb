@@ -13,21 +13,10 @@ describe DockingStation do
 
   it 'gets a bike' do
     my_docking_station = DockingStation.new
-    my_bike = Bike.new
+    my_bike = double(:bike, working?: true)
     my_docking_station.dock(my_bike)
 
-    my_bike = my_docking_station.release_bike
-
-    expect(my_bike).to be_instance_of(Bike)
-  end
-
-  it 'gets a bike that is working' do
-    my_docking_station = DockingStation.new
-    my_bike = Bike.new
-    my_docking_station.dock(my_bike)
-    my_bike = my_docking_station.release_bike
-
-    expect(my_bike.working?).to eq(true)
+    expect{ my_docking_station.release_bike }.to_not raise_error
   end
 
   it 'will respond to dock with an argument' do
@@ -44,14 +33,14 @@ describe DockingStation do
 
   it 'docks the bike we dock' do
     my_docking_station = DockingStation.new
-    my_bike = Bike.new
+    my_bike = double(:bike, working?: true)
 
     expect(my_docking_station.dock(my_bike)).to eq([my_bike])
   end
 
   it 'returns a docked bike' do
     my_docking_station = DockingStation.new
-    bike = Bike.new
+    bike = double(:bike, working?: true)
 
     my_docking_station.dock(bike)
 
@@ -66,6 +55,7 @@ describe DockingStation do
 
   it 'raises error if docking station is at capacity' do
     my_docking_station = DockingStation.new
+    my_bike = double(:bike)
     my_docking_station.dock(Bike.new)
     expect { my_docking_station.dock Bike.new }.to_not raise_error
   end
@@ -73,9 +63,12 @@ describe DockingStation do
   it 'raises error if docking station has more than 20 bikes in' do
     my_docking_station = DockingStation.new
     default_capacity.times do
-      my_docking_station.dock(Bike.new)
+      my_docking_station.dock(double(:bike))
     end
-    expect { my_docking_station.dock Bike.new }.to raise_error 'Docking station at capacity'
+
+    my_bike = double(:bike, working?: true)
+
+    expect { my_docking_station.dock my_bike }.to raise_error 'Docking station at capacity'
   end
 
   it 'can set a default value for number of bikes' do
@@ -93,27 +86,26 @@ describe DockingStation do
   it 'uses the provided amount of bikes to check if it is full or not' do
     my_docking_station = DockingStation.new(100)
     (default_capacity).times do
-      my_docking_station.dock(Bike.new)
+      my_docking_station.dock(double(:bike))
     end
 
-    expect { my_docking_station.dock(Bike.new) }.to_not raise_error
+    my_bike = double(:bike)
+
+    expect { my_docking_station.dock(my_bike) }.to_not raise_error
   end
 
   it 'will not release a bike that is not working' do
     my_docking_station = DockingStation.new
-    my_broken_bike = Bike.new
-    my_broken_bike.is_broken
+    my_broken_bike = double(:bike, working?: false)
     my_docking_station.dock(my_broken_bike)
-
 
     expect{ my_docking_station.release_bike }.to raise_error 'No bikes available'
   end
 
   it 'will release a bike that is working' do
     my_docking_station = DockingStation.new
-    my_broken_bike = Bike.new
-    my_broken_bike.is_broken
-    my_working_bike = Bike.new
+    my_broken_bike = double(:bike, working?: false)
+    my_working_bike = double(:bike, working?: true)
     my_docking_station.dock(my_broken_bike)
     my_docking_station.dock(my_working_bike)
 
