@@ -81,7 +81,7 @@ describe DockingStation do
   it 'can set a default value for number of bikes' do
     my_docking_station = DockingStation.new
 
-    expect(my_docking_station.capacity).to eq(20)
+    expect(my_docking_station.capacity).to eq(default_capacity)
   end
 
   it 'can accept an argument for setting number of bikes' do
