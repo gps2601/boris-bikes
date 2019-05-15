@@ -21,6 +21,10 @@ class DockingStation
     docked_bikes.push(bike)
   end
 
+  def give_faulty_bikes
+    @docked_bikes.select{|bike| !bike.working?}
+  end
+
   private
 
   def full?

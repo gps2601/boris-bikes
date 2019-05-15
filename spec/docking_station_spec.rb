@@ -111,4 +111,25 @@ describe DockingStation do
 
     expect(my_docking_station.release_bike).to eq(my_working_bike)
   end
+
+  it 'can respond to give_faulty_bikes' do
+    my_docking_station = DockingStation.new
+    expect(my_docking_station).to respond_to(:give_faulty_bikes)
+  end
+
+  it 'can give you all the faulty bikes' do
+    my_docking_station = DockingStation.new
+    first_broken_bike = double(:bike, working?: false)
+    second_broken_bike = double(:bike, working?: false)
+    third_broken_bike = double(:bike, working?: false)
+    my_docking_station.dock(first_broken_bike)
+    my_docking_station.dock(second_broken_bike)
+    my_docking_station.dock(third_broken_bike)
+
+    faulty_bikes = my_docking_station.give_faulty_bikes
+
+    expect(faulty_bikes).to eq([first_broken_bike, second_broken_bike, third_broken_bike])
+  end
+
+  # implement removal from class array
 end
