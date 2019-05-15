@@ -20,4 +20,12 @@ describe Bike do
 
     expect(my_bike.working?).to be false
   end
+
+  it 'can be fixed' do
+    my_bike = Bike.new
+    my_bike.is_broken
+    my_bike.fix
+
+    expect(my_bike.working?).to be true
+  end
 end

@@ -4,6 +4,9 @@ class Garage
     @bikes = []
   end
   def receive_faulty_bikes(faulty_bikes)
-    bikes.concat(faulty_bikes)
+    faulty_bikes.each do |bike|
+      bike.fix
+      @bikes.push(bike)
+    end
   end
 end
