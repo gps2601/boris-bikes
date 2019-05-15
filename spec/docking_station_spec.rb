@@ -108,4 +108,15 @@ describe DockingStation do
 
     expect{ my_docking_station.release_bike }.to raise_error 'No bikes available'
   end
+
+  it 'will release a bike that is working' do
+    my_docking_station = DockingStation.new
+    my_broken_bike = Bike.new
+    my_broken_bike.is_broken
+    my_working_bike = Bike.new
+    my_docking_station.dock(my_broken_bike)
+    my_docking_station.dock(my_working_bike)
+
+    expect(my_docking_station.release_bike).to eq(my_working_bike)
+  end
 end
