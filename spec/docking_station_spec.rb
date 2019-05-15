@@ -89,4 +89,13 @@ describe DockingStation do
 
     expect(my_docking_station.capacity).to eq(100)
   end
+
+  it 'uses the provided amount of bikes to check if it is full or not' do
+    my_docking_station = DockingStation.new(100)
+    (default_capacity).times do
+      my_docking_station.dock(Bike.new)
+    end
+
+    expect { my_docking_station.dock(Bike.new) }.to_not raise_error 
+  end
 end

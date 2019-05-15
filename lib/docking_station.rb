@@ -24,7 +24,7 @@ class DockingStation
   private
 
   def full?
-    @docked_bikes.count >= DEFAULT_CAPACITY
+    @docked_bikes.count >= @capacity
   end
 
   def empty?
