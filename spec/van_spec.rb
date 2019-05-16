@@ -55,4 +55,10 @@ describe Van do
 
     expect(my_van.bikes).to eq([working_bike])
   end
+
+  it 'can collect working bikes from bike receptacle' do
+    my_van = Van.new
+    
+    expect(my_van).to respond_to(:collect_working_bikes_from).with(1).argument
+  end
 end

@@ -14,6 +14,9 @@ class Van
     bike_receptacle.receive_faulty_bikes(faulty_bikes)
   end
 
+  def collect_working_bikes_from(bike_receptacle)
+  end
+
   def store_bike(bike)
     @bikes.push(bike)
   end
