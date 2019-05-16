@@ -15,6 +15,8 @@ class Van
   end
 
   def collect_working_bikes_from(bike_receptacle)
+    working_bikes_received = bike_receptacle.give_working_bikes
+    @bikes.concat(working_bikes_received)
   end
 
   def store_bike(bike)

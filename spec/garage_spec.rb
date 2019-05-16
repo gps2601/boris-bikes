@@ -27,4 +27,10 @@ describe Garage do
 
     expect(my_garage.bikes[0].working?).to be true
   end
+
+  it 'can respond to give working bikes' do
+    my_garage = Garage.new
+
+    expect(my_garage).to respond_to(:give_working_bikes)
+  end
 end

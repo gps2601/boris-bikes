@@ -58,7 +58,19 @@ describe Van do
 
   it 'can collect working bikes from bike receptacle' do
     my_van = Van.new
-    
+
     expect(my_van).to respond_to(:collect_working_bikes_from).with(1).argument
+  end
+
+  it 'can store collected working bikes from bike receptacle' do
+    my_van = Van.new
+    bike_receptacle = double(:bike_receptacle)
+    first_working_bike= double("working_bike")
+    second_working_bike= double("working_bike")
+    allow(bike_receptacle).to receive(:give_working_bikes).and_return([first_working_bike, second_working_bike])
+
+    my_van.collect_working_bikes_from(bike_receptacle)
+
+    expect(my_van.bikes).to eq([first_working_bike, second_working_bike])
   end
 end
