@@ -3,7 +3,7 @@ require 'docking_station'
 describe DockingStation do
   default_capacity = DockingStation::DEFAULT_CAPACITY
 
-  before(:each) do
+  let!(:each) do
     @my_docking_station = DockingStation.new
   end
 
