@@ -73,4 +73,37 @@ describe Van do
 
     expect(my_van.bikes).to eq([first_working_bike, second_working_bike])
   end
+
+  it 'can respond to delivering working bikes to bike receptacle' do
+    my_van = Van.new
+
+    expect(my_van).to respond_to(:deliver_working_bikes_to).with(1).argument
+  end
+
+  it 'will can deliver a working bike' do
+    my_van = Van.new
+    working_bike = double(:bike, working?: true)
+    my_van.store_bike(working_bike)
+
+    bike_receptacle = double(:bike_receptacle)
+    allow(bike_receptacle).to receive(:receive_working_bikes).with(anything())
+    my_van.deliver_working_bikes_to(bike_receptacle)
+
+    expect(my_van.bikes).to be_empty
+  end
+
+  it 'wont deliver faulty bikes' do
+    my_van = Van.new
+    working_bike = double(:bike, working?: true)
+    faulty_bike = double(:bike, working?: false)
+
+    my_van.store_bike(working_bike)
+    my_van.store_bike(faulty_bike)
+
+    bike_receptacle = double(:bike_receptacle)
+    allow(bike_receptacle).to receive(:receive_working_bikes).with(anything())
+    my_van.deliver_working_bikes_to(bike_receptacle)
+
+    expect(my_van.bikes).to eq([faulty_bike])
+  end
 end
