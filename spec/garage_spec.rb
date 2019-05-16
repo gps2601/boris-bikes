@@ -1,5 +1,4 @@
 require 'garage'
-require 'bike'
 
 describe Garage do
   let!(:my_garage) do
@@ -11,21 +10,17 @@ describe Garage do
   end
 
   it 'can store the faulty bikes it receives' do
-    first_faulty_bike = Bike.new
-    first_faulty_bike.is_broken
-    second_faulty_bike = Bike.new
-    second_faulty_bike.is_broken
-    @my_garage.receive_faulty_bikes([first_faulty_bike, second_faulty_bike])
+    faulty_bike = double(working?: false, fix: true)
+    @my_garage.receive_faulty_bikes([faulty_bike, faulty_bike])
 
-    expect(@my_garage.bikes).to eq([first_faulty_bike, second_faulty_bike])
+    expect(@my_garage.bikes).to eq([faulty_bike, faulty_bike])
   end
 
-  it 'can fixes the faulty bikes it receives' do
-    first_faulty_bike = Bike.new
-    first_faulty_bike.is_broken
-    @my_garage.receive_faulty_bikes([first_faulty_bike])
+  it 'attempts to fix the faulty bikes it receives' do
+    faulty_bike = double(working?: false, fix: true)
+    expect(faulty_bike).to receive(:fix)
 
-    expect(@my_garage.bikes[0].working?).to be true
+    @my_garage.receive_faulty_bikes([faulty_bike])
   end
 
   it 'can respond to give working bikes' do
