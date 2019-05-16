@@ -163,4 +163,13 @@ describe DockingStation do
 
     expect(my_docking_station.docked_bikes).to eq(working_bikes)
   end
+
+  it 'will not accept bikes if any are faulty' do
+    my_docking_station = DockingStation.new
+    faulty_bike = double(:bike, working?: false)
+    working_bike = double(:bike, working?: true)
+    bikes = [working_bike, faulty_bike]
+
+    expect { my_docking_station.receive_working_bikes(bikes) }.to raise_error "We do not accept faulty bikes here"
+  end
 end

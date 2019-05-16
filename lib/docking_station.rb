@@ -28,6 +28,9 @@ class DockingStation
   end
 
   def receive_working_bikes(working_bikes)
+    if working_bikes.any? {|bike| !bike.working?}
+      fail "We do not accept faulty bikes here"
+    end
     @docked_bikes.concat(working_bikes)
   end
 
