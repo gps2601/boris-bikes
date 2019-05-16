@@ -2,7 +2,7 @@ require_relative('bike')
 
 class DockingStation
   DEFAULT_CAPACITY = 20
-  attr_reader :docked_bikes, :capacity
+  attr_accessor :docked_bikes, :capacity
 
   def initialize(number_of_bikes = DEFAULT_CAPACITY)
     @capacity = number_of_bikes
@@ -22,8 +22,8 @@ class DockingStation
   end
 
   def give_faulty_bikes
-    bikes_to_return = @docked_bikes.select{|bike| !bike.working?}
-    @docked_bikes = @docked_bikes - bikes_to_return
+    bikes_to_return = docked_bikes.select{|bike| !bike.working?}
+    self.docked_bikes = self.docked_bikes - bikes_to_return
     bikes_to_return
   end
 
