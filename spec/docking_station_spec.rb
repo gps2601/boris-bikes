@@ -151,6 +151,6 @@ describe DockingStation do
   it 'can respond to receiving working bikes' do
     my_docking_station = DockingStation.new
 
-    expect(my_docking_station).to respond_to(:receive_working_bikes)
+    expect(my_docking_station).to respond_to(:receive_working_bikes).with(1).argument
   end
 end

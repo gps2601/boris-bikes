@@ -27,7 +27,7 @@ class DockingStation
     bikes_to_return
   end
 
-  def receive_working_bikes
+  def receive_working_bikes(working_bikes)
   end
 
   private
