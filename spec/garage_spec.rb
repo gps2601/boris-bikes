@@ -33,4 +33,21 @@ describe Garage do
 
     expect(my_garage).to respond_to(:give_working_bikes)
   end
+
+  it 'can give all the working bikes it has' do
+    my_garage = Garage.new
+
+    first_working_bike = double(:bike, working?: true)
+    second_working_bike = double(:bike, working?: true)
+    third_working_bike = double(:bike, working?: true)
+    broken_bike = double(:bike, working?: false)
+    my_garage.store_bike(first_working_bike)
+    my_garage.store_bike(second_working_bike)
+    my_garage.store_bike(third_working_bike)
+    my_garage.store_bike(broken_bike)
+
+    bikes_receieved = my_garage.give_working_bikes
+
+    expect(bikes_receieved).to eq([first_working_bike, second_working_bike, third_working_bike])
+  end
 end

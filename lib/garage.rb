@@ -13,6 +13,7 @@ class Garage
   end
 
   def give_working_bikes
+    @bikes.select {|bike| bike.working?}
   end
 
   def store_bike(bike)
