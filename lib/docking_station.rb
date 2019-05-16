@@ -27,6 +27,9 @@ class DockingStation
     bikes_to_return
   end
 
+  def receive_working_bikes
+  end
+
   private
 
   def full?

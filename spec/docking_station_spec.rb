@@ -130,7 +130,7 @@ describe DockingStation do
     expect(faulty_bikes).to eq([first_broken_bike, second_broken_bike, third_broken_bike])
   end
 
-  it 'will onlyremove the faulty bikes the docking station' do
+  it 'will only remove the faulty bikes the docking station' do
     my_docking_station = DockingStation.new
     first_broken_bike = double(:bike, working?: false)
     second_broken_bike = double(:bike, working?: false)
@@ -148,5 +148,9 @@ describe DockingStation do
     expect(all_bikes_working).to be true
   end
 
-  # implement removal from class array
+  it 'can respond to receiving working bikes' do
+    my_docking_station = DockingStation.new
+
+    expect(my_docking_station).to respond_to(:receive_working_bikes)
+  end
 end
