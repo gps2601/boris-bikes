@@ -29,9 +29,11 @@ class DockingStation
 
   def receive_working_bikes(working_bikes)
     if working_bikes.any? {|bike| !bike.working?}
-      fail "We do not accept faulty bikes here"
+      raise "We do not accept faulty bikes here"
+    elsif docked_bikes.length + working_bikes.length > capacity
+      raise "Docking station at capacity"
     end
-    @docked_bikes.concat(working_bikes)
+    docked_bikes.concat(working_bikes)
   end
 
   private

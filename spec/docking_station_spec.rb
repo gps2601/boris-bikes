@@ -183,4 +183,14 @@ describe DockingStation do
 
     expect(my_docking_station.docked_bikes).to eq([working_bike, working_bike])
   end
+
+  it 'will not accept bikes if it will put the docking station over capacity' do
+    my_docking_station = DockingStation.new
+    working_bike = double(:bike, working?: true)
+    default_capacity.times do
+      my_docking_station.dock(working_bike)
+    end
+
+    expect{ my_docking_station.receive_working_bikes([working_bike])}.to raise_error "Docking station at capacity"
+  end
 end
