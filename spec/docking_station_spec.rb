@@ -153,4 +153,14 @@ describe DockingStation do
 
     expect(my_docking_station).to respond_to(:receive_working_bikes).with(1).argument
   end
+
+  it 'will store working bikes received' do
+    my_docking_station = DockingStation.new
+    working_bike = double(:bike, working?: true)
+    working_bikes = [working_bike]
+
+    my_docking_station.receive_working_bikes(working_bikes)
+
+    expect(my_docking_station.docked_bikes).to eq(working_bikes)
+  end
 end

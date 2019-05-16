@@ -28,6 +28,7 @@ class DockingStation
   end
 
   def receive_working_bikes(working_bikes)
+    @docked_bikes.concat(working_bikes)
   end
 
   private
