@@ -16,7 +16,7 @@ describe DockingStation do
     my_bike = double(:bike, working?: true)
     my_docking_station.dock(my_bike)
 
-    expect{ my_docking_station.release_bike }.to_not raise_error
+    expect { my_docking_station.release_bike }.to_not raise_error
   end
 
   it 'will respond to dock with an argument' do
@@ -50,13 +50,14 @@ describe DockingStation do
   it 'raises error if no bike docked' do
     my_docking_station = DockingStation.new
 
-    expect { my_docking_station.release_bike }.to raise_error 'No bikes available'
+    expect { my_docking_station.release_bike }
+      .to raise_error 'No bikes available'
   end
 
   it 'raises error if docking station is at capacity' do
     my_docking_station = DockingStation.new
     my_bike = double(:bike)
-    my_docking_station.dock(Bike.new)
+    my_docking_station.dock(my_bike)
     expect { my_docking_station.dock Bike.new }.to_not raise_error
   end
 
@@ -68,7 +69,8 @@ describe DockingStation do
 
     my_bike = double(:bike, working?: true)
 
-    expect { my_docking_station.dock my_bike }.to raise_error 'Docking station at capacity'
+    expect { my_docking_station.dock my_bike }
+      .to raise_error 'Docking station at capacity'
   end
 
   it 'can set a default value for number of bikes' do
@@ -85,7 +87,7 @@ describe DockingStation do
 
   it 'uses the provided amount of bikes to check if it is full or not' do
     my_docking_station = DockingStation.new(100)
-    (default_capacity).times do
+    default_capacity.times do
       my_docking_station.dock(double(:bike))
     end
 
@@ -99,7 +101,8 @@ describe DockingStation do
     my_broken_bike = double(:bike, working?: false)
     my_docking_station.dock(my_broken_bike)
 
-    expect{ my_docking_station.release_bike }.to raise_error 'No bikes available'
+    expect { my_docking_station.release_bike }
+      .to raise_error 'No bikes available'
   end
 
   it 'will release a bike that is working' do
@@ -127,7 +130,8 @@ describe DockingStation do
     my_docking_station.dock(third_broken_bike)
 
     faulty_bikes = my_docking_station.give_faulty_bikes
-    expect(faulty_bikes).to eq([first_broken_bike, second_broken_bike, third_broken_bike])
+    expect(faulty_bikes)
+      .to eq([first_broken_bike, second_broken_bike, third_broken_bike])
   end
 
   it 'will only remove the faulty bikes the docking station' do
@@ -141,9 +145,9 @@ describe DockingStation do
     my_docking_station.dock(third_broken_bike)
     my_docking_station.dock(working_bike)
 
-    faulty_bikes = my_docking_station.give_faulty_bikes
+    my_docking_station.give_faulty_bikes
     bikes_left_in_docking_station = my_docking_station.docked_bikes
-    all_bikes_working = bikes_left_in_docking_station.all? {|bike| bike.working?}
+    all_bikes_working = bikes_left_in_docking_station.all?(&:working?)
 
     expect(all_bikes_working).to be true
   end
@@ -151,7 +155,8 @@ describe DockingStation do
   it 'can respond to receiving working bikes' do
     my_docking_station = DockingStation.new
 
-    expect(my_docking_station).to respond_to(:receive_working_bikes).with(1).argument
+    expect(my_docking_station)
+      .to respond_to(:receive_working_bikes).with(1).argument
   end
 
   it 'will store working bikes received' do
@@ -170,7 +175,8 @@ describe DockingStation do
     working_bike = double(:bike, working?: true)
     bikes = [working_bike, faulty_bike]
 
-    expect { my_docking_station.receive_working_bikes(bikes) }.to raise_error "We do not accept faulty bikes here"
+    expect { my_docking_station.receive_working_bikes(bikes) }
+      .to raise_error 'We do not accept faulty bikes here'
   end
 
   it 'will accept additional bikes if bikes already docked' do
@@ -191,6 +197,7 @@ describe DockingStation do
       my_docking_station.dock(working_bike)
     end
 
-    expect{ my_docking_station.receive_working_bikes([working_bike])}.to raise_error "Docking station at capacity"
+    expect { my_docking_station.receive_working_bikes([working_bike]) }
+      .to raise_error 'Docking station at capacity'
   end
 end

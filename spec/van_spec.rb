@@ -9,20 +9,21 @@ describe Van do
 
   it 'will store the result of telling bike receptacle to give bikes' do
     my_van = Van.new
-    bike_receptacle = double(:bike_receptacle, give_faulty_bikes: ["faulty bike"])
+    bike_receptacle = double(give_faulty_bikes: ['faulty bike'])
 
     my_van.collect_faulty_bikes_from(bike_receptacle)
 
-    expect(my_van.bikes).to eq(["faulty bike"])
+    expect(my_van.bikes).to eq(['faulty bike'])
   end
 
   it 'can store multiple bikes receieved from bike receptacle' do
     my_van = Van.new
-    bike_receptacle = double(:bike_receptacle, give_faulty_bikes: ["faulty bike 1", "faulty bike 2"])
+    faulty_bikes = ['faulty bike 1', 'faulty bike 2']
+    bike_receptacle = double(give_faulty_bikes: faulty_bikes)
 
     my_van.collect_faulty_bikes_from(bike_receptacle)
 
-    expect(my_van.bikes).to eq(["faulty bike 1", "faulty bike 2"])
+    expect(my_van.bikes).to eq(['faulty bike 1', 'faulty bike 2'])
   end
 
   it 'can respond to deliver faulty bikes to a bike receptacle' do
@@ -36,7 +37,7 @@ describe Van do
     my_van.store_bike(faulty_bike)
 
     bike_receptacle = double(:bike_receptacle)
-    allow(bike_receptacle).to receive(:receive_faulty_bikes).with(anything())
+    allow(bike_receptacle).to receive(:receive_faulty_bikes).with(anything)
     my_van.deliver_faulty_bikes_to(bike_receptacle)
 
     expect(my_van.bikes).to be_empty
@@ -50,7 +51,7 @@ describe Van do
     my_van.store_bike(working_bike)
 
     bike_receptacle = double(:bike_receptacle)
-    allow(bike_receptacle).to receive(:receive_faulty_bikes).with(anything())
+    allow(bike_receptacle).to receive(:receive_faulty_bikes).with(anything)
     my_van.deliver_faulty_bikes_to(bike_receptacle)
 
     expect(my_van.bikes).to eq([working_bike])
@@ -65,13 +66,13 @@ describe Van do
   it 'can store collected working bikes from bike receptacle' do
     my_van = Van.new
     bike_receptacle = double(:bike_receptacle)
-    first_working_bike= double("working_bike")
-    second_working_bike= double("working_bike")
-    allow(bike_receptacle).to receive(:give_working_bikes).and_return([first_working_bike, second_working_bike])
+    working_bike = double('working_bike')
+    allow(bike_receptacle)
+      .to receive(:give_working_bikes).and_return([working_bike, working_bike])
 
     my_van.collect_working_bikes_from(bike_receptacle)
 
-    expect(my_van.bikes).to eq([first_working_bike, second_working_bike])
+    expect(my_van.bikes).to eq([working_bike, working_bike])
   end
 
   it 'can respond to delivering working bikes to bike receptacle' do
@@ -86,7 +87,7 @@ describe Van do
     my_van.store_bike(working_bike)
 
     bike_receptacle = double(:bike_receptacle)
-    allow(bike_receptacle).to receive(:receive_working_bikes).with(anything())
+    allow(bike_receptacle).to receive(:receive_working_bikes).with(anything)
     my_van.deliver_working_bikes_to(bike_receptacle)
 
     expect(my_van.bikes).to be_empty
@@ -101,7 +102,7 @@ describe Van do
     my_van.store_bike(faulty_bike)
 
     bike_receptacle = double(:bike_receptacle)
-    allow(bike_receptacle).to receive(:receive_working_bikes).with(anything())
+    allow(bike_receptacle).to receive(:receive_working_bikes).with(anything)
     my_van.deliver_working_bikes_to(bike_receptacle)
 
     expect(my_van.bikes).to eq([faulty_bike])

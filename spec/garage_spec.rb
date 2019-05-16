@@ -48,7 +48,8 @@ describe Garage do
 
     bikes_receieved = my_garage.give_working_bikes
 
-    expect(bikes_receieved).to eq([first_working_bike, second_working_bike, third_working_bike])
+    expect(bikes_receieved)
+      .to eq([first_working_bike, second_working_bike, third_working_bike])
   end
 
   it 'can removes the working bike it has' do
@@ -63,7 +64,7 @@ describe Garage do
     my_garage.store_bike(third_working_bike)
     my_garage.store_bike(broken_bike)
 
-    bikes_receieved = my_garage.give_working_bikes
+    my_garage.give_working_bikes
 
     expect(my_garage.bikes).to eq([broken_bike])
   end

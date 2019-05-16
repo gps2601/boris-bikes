@@ -10,8 +10,9 @@ class DockingStation
   end
 
   def release_bike
-    index_of_first_working_bike = docked_bikes.index{|bike| bike.working?}
-    raise 'No bikes available' if index_of_first_working_bike == nil
+    index_of_first_working_bike = docked_bikes.index(&:working?)
+    raise 'No bikes available' if index_of_first_working_bike.nil?
+
     docked_bikes.delete_at(index_of_first_working_bike)
   end
 
@@ -22,17 +23,17 @@ class DockingStation
   end
 
   def give_faulty_bikes
-    bikes_to_return = docked_bikes.select{|bike| !bike.working?}
-    self.docked_bikes = self.docked_bikes - bikes_to_return
+    bikes_to_return = docked_bikes.reject(&:working?)
+    self.docked_bikes = docked_bikes - bikes_to_return
     bikes_to_return
   end
 
   def receive_working_bikes(working_bikes)
-    if working_bikes.any? {|bike| !bike.working?}
-      raise "We do not accept faulty bikes here"
-    elsif docked_bikes.length + working_bikes.length > capacity
-      raise "Docking station at capacity"
-    end
+    raise 'We do not accept faulty bikes here' if working_bikes.any? { |bike| !bike.working? }
+
+    resulting_size = docked_bikes.count + working_bikes.count
+    raise 'Docking station at capacity' if resulting_size > capacity
+
     docked_bikes.concat(working_bikes)
   end
 
